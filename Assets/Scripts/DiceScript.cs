@@ -1,26 +1,40 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class DiceScript : MonoBehaviour
 {
-    public Button RollDiceButton, OpenShopButton;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public Button diceButton;
+    public int value;
+    public Economy economy;
+    /*float multValue;
+    float multGPS;
+	float lastRolled;
+	float numberRolled;
+    float[] valueHisto;
+	float goldEarnedRoll;
+	float totalGoldEarned;*/
+
+    public void Start()
     {
-        RollDiceButton.onClick.AddListener(RollDice);
-        OpenShopButton.onClick.AddListener(() => Debug.Log("Shop opened!")); // Placeholder for shop opening logic
+        diceButton.onClick.AddListener(RollDice);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RollDice()
     {
-        
+        StartCoroutine(RollDiceCoroutine());
     }
 
-    void RollDice()
+    IEnumerator RollDiceCoroutine()
     {
-        int diceRoll = Random.Range(1, 7); // Generates a random number between 1 and 6
-        Debug.Log("You rolled a " + diceRoll);
-        // You can add additional logic here to handle the result of the dice roll
+        // Simulate rolling the dice with he delay
+        // Start dice rolling animation
+        yield return new WaitForSeconds(10f);
+        // Stop dice rolling animation
+        int diceRoll = Random.Range(1, value);
+        economy.AddGold(diceRoll);
+        economy.DisplayGold();
+        yield return null;
     }
 }
